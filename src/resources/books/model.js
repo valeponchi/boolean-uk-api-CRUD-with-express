@@ -32,6 +32,15 @@ function Book() {
 			.catch(console.error)
 	}
 
+	//findOne
+	function findOne(bookId, callback) {
+		const sql = `
+    SELECT * FROM books 
+    WHERE id = ($1);
+    `
+		dbClient.query(sql, [bookId]).then(result => callback(result.rows[0]))
+	}
+
 	//createOne
 	function createOne(newBook, callback) {
 		const { title, type, author, topic, pubblication_date } = newBook
@@ -54,6 +63,7 @@ function Book() {
 
 	return {
 		findAll,
+		findOne,
 		createOne,
 	}
 }
